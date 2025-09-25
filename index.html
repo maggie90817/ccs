@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHENG CHEN STUDIO | 用光影訴說你的故事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* 導航欄 - 精品感設計 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 25px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #d4a574;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #d4a574;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #d4a574;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 主視覺區 - 藝術感提升 */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, rgba(212,165,116,0.03) 0%, #000 70%);
+            overflow: hidden;
+        }
+
+        /* 背景媒體層 */
+        .hero-media-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* 照片輪播背景 */
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 3rem;
+            opacity: 0;
+            animation: slideAnimation 12s infinite;
+            background: linear-gradient(45deg, transparent 30%, rgba(212,165,116,0.02) 50%, transparent 70%);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-slide:nth-child(1) {
+            animation-delay: 0s;
+            background-color: #0a0a0a;
+        }
+
+        .hero-slide:nth-child(2) {
+            animation-delay: 4s;
+            background-color: #080808;
+        }
+
+        .hero-slide:nth-child(3) {
+            animation-delay: 8s;
+            background-color: #050505;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide span {
+            font-size: 0.9rem;
+            color: #d4a574;
+            margin-top: 15px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        @keyframes slideAnimation {
+            0%, 33.33% { opacity: 1; }
+            33.34%, 100% { opacity: 0; }
+        }
+
+        /* 遮罩層 */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            margin-bottom: 50px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 200;
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .cta-primary, .cta-secondary {
+            padding: 15px 45px;
+            text-decoration: none;
+            border-radius: 0;
+            transition: all 0.3s;
+            display: inline-block;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .cta-primary {
+            background: #d4a574;
+            color: #000;
+            border: 1px solid #d4a574;
+        }
+
+        .cta-primary:hover {
+            background: transparent;
+            color: #d4a574;
+        }
+
+        .cta-secondary {
+            border: 1px solid rgba(212,165,116,0.5);
+            color: #d4a574;
+            background: transparent;
+        }
+
+        .cta-secondary:hover {
+            background: #d4a574;
+            color: #000;
+            border-color: #d4a574;
+        }
+
+        /* 媒體切換按鈕 - 精品設計 */
+        .media-toggle {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 20px;
+        }
+
+        .media-toggle button {
+            padding: 8px 25px;
+            background: transparent;
+            border: 1px solid rgba(212,165,116,0.3);
+            color: rgba(212,165,116,0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .media-toggle button:hover,
+        .media-toggle button.active {
+            background: rgba(212,165,116,0.1);
+            border-color: #d4a574;
+            color: #d4a574;
+        }
+
+        /* 通用區塊樣式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 200;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        .section-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            font-weight: 200;
+            letter-spacing: 1px;
+        }
+
+        /* 作品集區 - 藝術感 */
+        .portfolio {
+            padding: 120px 0;
+            background: #050505;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2px;
+            margin-bottom: 2px;
+        }
+
+        /* 商業攝影 - 招牌大格 */
+        .portfolio-hero {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: #000;
+        }
+
+        .portfolio-hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .portfolio-hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .portfolio-hero-slide.active {
+            opacity: 1;
+        }
+
+        .portfolio-hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 50px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            z-index: 2;
+        }
+
+        .portfolio-hero-content h3 {
+            font-size: 2rem;
+            color: #d4a574;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .portfolio-hero-content p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* 輪播指示器 */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slider-dot.active {
+            background: #d4a574;
+            width: 25px;
+            border-radius: 4px;
+        }
+
+        /* 其他作品格子 */
+        .portfolio-grid-small {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(0.98);
+        }
+
+        /* 個別項目輪播 */
+        .portfolio-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .portfolio-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 2.5rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .portfolio-slide.active {
+            opacity: 1;
+        }
+
+        .portfolio-slide span {
+            font-size: 0.75rem;
+            color: rgba(212,165,116,0.6);
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 200;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 30px;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-overlay h3 {
+            color: #d4a574;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+
+        .portfolio-overlay p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 服務項目區 - 精品感 */
+        .services {
+            padding: 120px 0;
+            background: #000;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background: transparent;
+            border: 1px solid rgba(212,165,116,0.2);
+            overflow: hidden;
+            transition: all 0.5s;
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(212,165,116,0.03));
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212,165,116,0.5);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 200px;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border-bottom: 1px solid rgba(212,165,116,0.1);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-content {
+            padding: 35px;
+            text-align: center;
+        }
+
+        .service-number {
+            font-size: 3rem;
+            font-weight: 100;
+            color: rgba(212,165,116,0.2);
+            margin-bottom: -15px;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            margin: 20px 0 15px;
+            color: #d4a574;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .service-description {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 0.9rem;
+            font-weight: 200;
+        }
+
+        .service-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            padding-left: 20px;
+            position: relative;
+            font-weight: 200;
+            letter-spacing: 0.5px;
+        }
+
+        .service-features li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: #d4a574;
+            font-size: 1.2rem;
+        }
+
+        .service-price {
+            font-size: 1rem;
+            color: #d4a574;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 服務流程區 - 藝術設計 */
+        .service-process {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #000 0%, #050505 50%, #000 100%);
+        }
+
+        .process-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 80px;
+        }
+
+        .process-type {
+            background: transparent;
+            border: 1px solid rgba(212,165,116,0.15);
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-type::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, transparent, rgba(212,165,116,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 0;
+        }
+
+        .process-type:hover::before {
+            opacity: 1;
+        }
+
+        .process-type h3 {
+            color: #d4a574;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 流程圖容器 */
+        .process-flow {
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(212,165,116,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            background: rgba(212,165,116,0.05);
+            border-color: rgba(212,165,116,0.3);
+            transform: translateX(5px);
+        }
+
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4a574, #b8935f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            color: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .step-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            font-weight: 200;
+            line-height: 1.4;
+        }
+
+        /* 連接線 */
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 39px;
+            bottom: -15px;
+            width: 2px;
+            height: 15px;
+            background: linear-gradient(to bottom, #d4a574, rgba(212,165,116,0.3));
+            z-index: 1;
+        }
+
+        /* 進度條背景 */
+        .process-progress {
+            position: absolute;
+            left: 69px;
+            top: 40px;
+            bottom: 40px;
+            width: 1px;
+            background: rgba(212,165,116,0.2);
+            z-index: 0;
+        }
+
+        /* 動畫效果 */
+        @keyframes flowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .process-flow::before {
+            content: '';
+            position: absolute;
+            left: 69px;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #d4a574, transparent);
+            animation: flowPulse 3s ease-in-out infinite;
+        }
+
+       /* 影片作品區 */
+.video-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    margin: 60px auto; /* 修正後的 margin 屬性，讓內容置中 */
+    max-width: 900px;
+}
+.video-wrapper img,
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(212,165,116,0.2);
+}
+
+/* 關於我們區 */
+.about {
+    padding-top: 50px; /* 這裡的數值會決定與上方區塊的間距 */
+    padding-bottom: 80px;
+}
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+/*... 其他 .about 相關樣式 */
+.about-text h3 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    font-weight: 200;
+    letter-spacing: 2px;
+}
+.about-text p {
+    color: rgba(255,255,255,0.6);
+    line-height: 2;
+    margin-bottom: 25px;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+}
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+.stat-item {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid rgba(212,165,116,0.2);
+}
+.stat-number {
+    font-size: 1.5rem;
+    color: #d4a574;
+    font-weight: 200;
+    letter-spacing: 1px;
+}
+.stat-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 200;
+}
+.about-image {
+    height: 500px;
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: rgba(212,165,116,0.2);
+    border: 1px solid rgba(212,165,116,0.1);
+    background-size: cover;
+    background-position: center;
+}
+
+        /* 關於我們圖片輪播 */
+        .about-slideshow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(212,165,116,0.2);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .about-slide.active {
+            opacity: 1;
+        }
+
+        /* 常見問題 */
+        .qa {
+            padding: 120px 0;
+            background: #050505;
+        }
+
+        .qa-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .qa-item {
+            border-bottom: 1px solid rgba(212,165,116,0.1);
+            margin-bottom: 0;
+        }
+
+        .qa-question {
+            padding: 30px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .qa-question:hover {
+            color: #d4a574;
+        }
+
+        .qa-toggle {
+            color: #d4a574;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            font-weight: 200;
+        }
+
+        .qa-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .qa-answer {
+            padding: 0 0 30px 0;
+            color: rgba(255,255,255,0.5);
+            line-height: 2;
+            display: none;
+            font-weight: 200;
+            font-size: 0.9rem;
+        }
+
+        .qa-answer.active {
+            display: block;
+        }
+
+        /* 聯絡區 */
+        .contact {
+            padding: 120px 0;
+            background: #000;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: 200;
+            letter-spacing: 2px;
+        }
+
+        .contact-info p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+            line-height: 2;
+            font-weight: 200;
+        }
+
+        .contact-info ul {
+            color: rgba(255,255,255,0.6);
+            font-weight: 200;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-info ul li {
+            margin-bottom: 15px;
+        }
+
+        .contact-form {
+            background: transparent;
+            border: 1px solid rgba(212,165,116,0.2);
+            padding: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #d4a574;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid rgba(212,165,116,0.2);
+            color: #fff;
+            font-weight: 200;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4a574;
+            background: rgba(212,165,116,0.02);
+        }
+
+        .form-group select {
+            color: #000;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .form-group select option {
+            color: #000;
+            background: #fff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            color: #d4a574;
+            border: 1px solid #d4a574;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .submit-btn:hover {
+            background: #d4a574;
+            color: #000;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .process-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid,
+            .portfolio-grid,
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">CHENG CHEN STUDIO</div>
+            <ul class="nav-menu">
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#portfolio">作品集</a></li>
+                <li><a href="#services">服務項目</a></li>
+                <li><a href="#process">服務流程</a></li>
+                <li><a href="#video">影片作品</a></li>
+                <li><a href="#about">關於我們</a></li>
+                <li><a href="#qa">常見問題</a></li>
+                <li><a href="#contact">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主視覺區 -->
+    <section id="home" class="hero">
+        <!-- 背景媒體層 -->
+        <div class="hero-media-layer">
+            <!-- 影片背景 -->
+            <video class="hero-video" id="heroVideo" autoplay muted loop style="display: none;">
+                <source src="your-video.mp4" type="video/mp4">
+            </video>
+            
+            <!-- 照片輪播背景 -->
+            <div class="hero-slideshow" id="heroSlideshow">
+            </div>
+        </div>
+
+        <!-- 遮罩層 -->
+        <div class="hero-overlay"></div>
+
+        <!-- 主要內容 -->
+        <div class="hero-content">
+            <h1>每一瞬間<br>都是永恆</h1>
+            <p class="hero-description">專業攝影空間，頂級設備，資深團隊<br>為您創造無與倫比的視覺體驗</p>
+            <div class="cta-container">
+                <a href="#contact" class="cta-primary">立即預約</a>
+                <a href="#portfolio" class="cta-secondary">瀏覽作品</a>
+            </div>
+        </div>
+
+        <!-- 媒體切換按鈕 -->
+        <div class="media-toggle">
+            <button onclick="toggleMedia('slideshow')" class="active">照片</button>
+            <button onclick="toggleMedia('video')">影片</button>
+        </div>
+    </section>
+
+<!-- 影片作品區 -->
+<section id="video" class="video-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">影片作品集</h2>
+            <p class="section-description">光影藝術，定格美好</p>
+        </div>
+        
+        <div class="video-wrapper">
+            <!-- 使用 img 標籤來嵌入 GIF -->
+            <img src="C:\Users\a0905\OneDrive\桌面\0923.gif" alt="GIF作品" />
+        </div>
+    </div>
+</section>
+
+
+   <!-- 作品集區 -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">精選作品集</h2>
+                <p class="section-description">每張照片都訴說著獨特的故事</p>
+            </div>
+            
+            <!-- 商業攝影 - 招牌大格 -->
+            <div class="portfolio-grid">
+                <div class="portfolio-hero" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-hero-slider" id="commercialSlider">
+                    </div>
+                    <div class="portfolio-hero-content">
+                        <h3>商業攝影 - SIGNATURE</h3>
+                        <p>企業形象 · 產品攝影 · 品牌故事</p>
+                    </div>
+                    <div class="slider-dots" id="commercialDots">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他作品格子 -->
+            <div class="portfolio-grid-small">
+                <div class="portfolio-item" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-slider" data-category="wedding">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>浪漫婚紗</h3>
+                        <p>Wedding Photography</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-slider" data-category="portrait">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>個人寫真</h3>
+                        <p>Portrait Photography</p>
+                    </div>
+                </div>
+                
+               <div class="portfolio-item" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-slider" data-category="family">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>家庭親子</h3>
+                        <p>Family Photography</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-slider" data-category="artistic">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>藝術創作</h3>
+                        <p>Artistic Photography</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item" onclick="window.open('portfolio.html', '_blank')">
+                    <div class="portfolio-slider" data-category="event">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <h3>活動紀錄</h3>
+                        <p>Event Photography</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- 服務項目區 -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">專業服務項目</h2>
+                <p class="section-description">六大專業服務，一站式完美體驗</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- 動態生成服務項目 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務流程區 -->
+    <section id="process" class="service-process">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">專業服務流程</h2>
+                <p class="section-description">透明化的工作流程，確保每個環節都完美呈現</p>
+            </div>
+            
+            <div class="process-types">
+                <!-- 平面攝影流程 -->
+                <div class="process-type">
+                    <h3>平面攝影流程</h3>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-title">1. 前期溝通與預算、報價</div>
+                        </div>
+                            <div class="process-step">
+                            <div class="step-title">2. 時程安排與執行拍攝</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-title">3. 後製修片與完整交付</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-title">4. 結帳付款</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 動態影片流程 -->
+                <div class="process-type">
+                    <h3>動態影片流程</h3>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-title">1. 前期溝通與預算、報價</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-title">2. 時程安排與執行拍攝</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-title">3. 了解預算並安排動態分鏡腳本</div>
+                        </div>
+                            <div class="process-step">
+                            <div class="step-title">4. 腳本大綱及影片前置期（含場勘道具）</div>
+                        </div>
+                            <div class="process-step">
+                            <div class="step-title">5. 影片拍攝製作執行並製作A copy</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-title">6. 完整交付B copy並結帳付款</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於我們區 -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h3>用心創造 <br>每個完美瞬間</h3>
+                <p>CHENG CHEN STUDIO 成立於2009年，我們相信每個瞬間都值得被完美記錄。</p>
+                <p>透過專業技術與藝術眼光，我們不只是拍攝，更是在創造屬於您的永恆回憶。</p>
+                
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">企業指定</span>
+                        <div class="stat-label">滿意客戶</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">>10年</span>
+                        <div class="stat-label">專業經驗</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <div class="stat-label">用心服務</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image about-slideshow">
+                <!-- 動態生成關於我們圖片 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 常見問題區 -->
+    <section id="qa" class="qa">
+        <div class="qa-container">
+            <div class="section-header">
+                <h2 class="section-title">常見問題</h2>
+                <p class="section-description">解答您對攝影棚服務的疑問</p>
+            </div>
+            
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleQA(this)">
+                    <span>攝影棚的租借時間如何計算？</span>
+                    <span class="qa-toggle">+</span>
+                </div>
+                <div class="qa-answer">
+                    我們的攝影棚以小時為單位計價，最低租借時間為1小時。營業時間為每日上午9點至晚上9點，可提前預約。超時使用將按小時加計費用。
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleQA(this)">
+                    <span>攝影棚提供哪些設備？</span>
+                    <span class="qa-toggle">+</span>
+                </div>
+                <div class="qa-answer">
+                    我們提供專業攝影燈具、無縫背景紙(多色選擇)、反光板、腳架等基礎設備。如需特殊器材或道具，建議提前告知，我們可協助準備或租借。
+                </div>
+            </div>
+            
+            <div class="qa-item">
+                <div class="qa-question" onclick="toggleQA(this)">
+                    <span>是否提供攝影師服務？</span>
+                    <span class="qa-toggle">+</span>
+                </div>
+                <div class="qa-answer">
+                    是的，我們有專業攝影師團隊可提供拍攝服務。您可以選擇單純租借攝影棚，或是搭配攝影師的完整服務方案。攝影師費用另計。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡區 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>讓我們一起<br>創造美好</h3>
+                    <p>每個故事都值得被完美記錄，每個瞬間都應該被永恆珍藏。</p>
+                    
+                    <ul style="list-style: none; padding: 0;">
+                        <li>📍 台北市中正區前林路171號2樓</li>
+                        <li>📞 0915-009-590</li>
+                        <li>📱 LINE ID: @chengchenstudio</li>
+                        <li>✉️ hello@chengchenstudio.com.tw</li>
+                        <li>🕗 營業時間: 週一至週日 09:00-21:00</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-form">
+                    <form onsubmit="submitForm(event)">
+                        <div class="form-group">
+                            <label>服務類型</label>
+                            <select required>
+                                <option value="">請選擇服務類型</option>
+                                <option value="commercial">商業攝影</option>
+                                <option value="studio-rental">攝影棚租借</option>
+                                <option value="portrait">個人寫真</option>
+                                <option value="wedding">婚紗攝影</option>
+                                <option value="family">家庭親子</option>
+                                <option value="artistic">藝術創作</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>姓名</label>
+                            <input type="text" required placeholder="請輸入您的姓名">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>聯絡電話</label>
+                            <input type="tel" required placeholder="請輸入聯絡電話">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>詳細需求</label>
+                            <textarea rows="5" placeholder="請詳細描述您的拍攝需求"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">立即預約諮詢</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+// 服務項目資料，包含所有文字內容
+const serviceContentData = [
+    { 
+        number: '01', 
+        title: '商業攝影', 
+        description: '企業形象照、產品攝影、廣告拍攝等商業攝影服務', 
+        features: ['企業形象', '產品展示', '品牌故事', '專業服務'],
+        serviceKey: 'service1'
+    },
+    { 
+        number: '02', 
+        title: '攝影棚租借', 
+        description: '專業攝影棚空間，配備完整燈光設備與多樣化背景，具有試衣與定妝空間', 
+        features: ['專業空間與設備', '多樣背景選擇', '試衣空間', '定妝空間'],
+        serviceKey: 'service2'
+    },
+    { 
+        number: '03', 
+        title: '個人寫真', 
+        description: '專業攝影師量身打造個人寫真服務', 
+        features: ['專業攝影師', '造型設計', '多元風格', '精緻修圖'],
+        serviceKey: 'service3'
+    },
+    { 
+        number: '04', 
+        title: '婚紗攝影', 
+        description: '浪漫唯美的婚紗攝影服務', 
+        features: ['浪漫拍攝', '精緻造型', '完美回憶', '永恆珍藏'],
+        serviceKey: 'service4'
+    },
+    { 
+        number: '05', 
+        title: '家庭親子', 
+        description: '溫馨自然的家庭親子攝影', 
+        features: ['親子互動', '家庭溫馨', '自然拍攝', '珍貴時光'],
+        serviceKey: 'service5'
+    },
+    { 
+        number: '06', 
+        title: '藝術創作', 
+        description: '概念攝影與藝術創作', 
+        features: ['概念創作', '時尚前衛', '藝術表達', '突破框架'],
+        serviceKey: 'service6'
+    }
+];
+
+// 作品集分類對應
+const portfolioCategories = {
+    'commercial': 'commercial',
+    'wedding': 'wedding', 
+    'portrait': 'portrait',
+    'family': 'family',
+    'artistic': 'artistic',
+    'event': 'event'
+};
+
+// 渲染服務項目圖片和內容
+function renderServices(data) {
+    const servicesGrid = document.querySelector('.services-grid');
+    if (!servicesGrid) return;
+    
+    // 清空現有內容，避免重複載入
+    servicesGrid.innerHTML = '';
+
+    // 根據圖片資料生成 HTML 卡片
+    serviceContentData.forEach((content, index) => {
+        const serviceImage = data[content.serviceKey] && data[content.serviceKey][0] ? data[content.serviceKey][0].url : '';
+        
+        const serviceCard = document.createElement('div');
+        serviceCard.className = 'service-card';
+        serviceCard.innerHTML = `
+            <div class="service-image" style="background-image: url('${serviceImage}');">
+                ${!serviceImage ? content.number : ''}
+            </div>
+            <div class="service-content">
+                <div class="service-number">${content.number}</div>
+                <h3 class="service-title">${content.title}</h3>
+                <p class="service-description">${content.description}</p>
+                <ul class="service-features">
+                    ${content.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+                <div class="service-price">專案報價</div>
+            </div>
+        `;
+        servicesGrid.appendChild(serviceCard);
+    });
+}
+
+// 根據資料動態渲染作品集
+function renderPortfolio(data) {
+    if (!data) return;
+
+    // 渲染主視覺輪播
+    renderHeroSlideshow(data.hero || []);
+    
+    // 渲染商業攝影大格輪播
+    renderCommercialSlider(data.commercial || []);
+    
+    // 渲染其他作品集項目
+    renderPortfolioItems(data);
+    
+    // 渲染關於我們圖片
+    renderAboutSlideshow(data.about || []);
+}
+
+// 渲染主視覺輪播
+function renderHeroSlideshow(heroData) {
+    const heroSlideshow = document.getElementById('heroSlideshow');
+    if (!heroSlideshow || heroData.length === 0) return;
+    
+    heroSlideshow.innerHTML = '';
+    heroData.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'hero-slide';
+        if (index === 0) div.classList.add('active');
+        div.style.backgroundImage = `url(${item.url})`;
+        div.innerHTML = `<span>${item.title || ''}</span>`;
+        heroSlideshow.appendChild(div);
+    });
+    initHeroSlideshow();
+}
+
+// 渲染商業攝影大格輪播
+function renderCommercialSlider(commercialData) {
+    const commercialSlider = document.getElementById('commercialSlider');
+    const commercialDots = document.getElementById('commercialDots');
+    
+    if (!commercialSlider || !commercialDots || commercialData.length === 0) return;
+    
+    // 清空現有內容
+    commercialSlider.innerHTML = '';
+    commercialDots.innerHTML = '';
+    
+    // 生成輪播slides
+    commercialData.forEach((item, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'portfolio-hero-slide';
+        slide.style.backgroundImage = `url(${item.url})`;
+        if (index === 0) slide.classList.add('active');
+        commercialSlider.appendChild(slide);
+
+        const dot = document.createElement('span');
+        dot.className = 'slider-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.onclick = (e) => { e.stopPropagation(); changeHeroSlide(index); };
+        commercialDots.appendChild(dot);
+    });
+    
+    // 啟動自動輪播
+    startCommercialSlider();
+}
+
+// 渲染作品集項目
+function renderPortfolioItems(data) {
+    const portfolioSliders = document.querySelectorAll('.portfolio-slider');
+    
+    portfolioSliders.forEach(slider => {
+        const category = slider.getAttribute('data-category');
+        const categoryData = data[category] || [];
+        
+        if (categoryData.length === 0) return;
+        
+        slider.innerHTML = '';
+        categoryData.forEach((item, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'portfolio-slide';
+            slide.style.backgroundImage = `url(${item.url})`;
+            if (index === 0) slide.classList.add('active');
+            slide.innerHTML = `<span>${item.title || category}</span>`;
+            slider.appendChild(slide);
+        });
+        
+        // 初始化該類別的輪播
+        new PortfolioSlider(slider);
+    });
+}
+
+// 渲染關於我們圖片輪播
+function renderAboutSlideshow(aboutData) {
+    const aboutSlideshow = document.querySelector('.about-slideshow');
+    if (!aboutSlideshow || aboutData.length === 0) return;
+    
+    aboutSlideshow.innerHTML = '';
+    aboutData.forEach((item, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'about-slide';
+        slide.style.backgroundImage = `url(${item.url})`;
+        if (index === 0) slide.classList.add('active');
+        aboutSlideshow.appendChild(slide);
+    });
+    
+    // 啟動關於我們輪播
+    new AboutSlider();
+}
+
+// 從 localStorage 載入網站資料
+function loadFromLocalStorage() {
+    try {
+        const saved = localStorage.getItem('chengchen_images');
+        if (saved) {
+            const loadedData = JSON.parse(saved);
+            console.log("資料從後台載入:", loadedData);
+            renderPortfolio(loadedData);
+            renderServices(loadedData);
+            return loadedData;
+        }
+    } catch (error) {
+        console.error("載入 localStorage 資料失敗:", error);
+    }
+    return null;
+}
+
+// 頁面載入時執行
+document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();
+});
+
+// 監聽後台資料更新事件
+window.addEventListener('storage', (event) => {
+    if (event.key === 'chengchen_images') {
+        try {
+            const newData = JSON.parse(event.newValue);
+            console.log("後台資料已更新");
+            renderPortfolio(newData);
+            renderServices(newData);
+        } catch (error) {
+            console.error("處理更新資料時出錯:", error);
+        }
+    }
+});
+
+// 主視覺輪播功能
+function initHeroSlideshow() {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('#heroSlideshow .hero-slide');
+    if (slides.length <= 1) return;
+    
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 4000);
+}
+
+// 商業攝影大格輪播
+let currentHeroSlide = 0;
+let heroSliderInterval;
+
+function changeHeroSlide(index) {
+    const heroSlides = document.querySelectorAll('.portfolio-hero-slide');
+    const heroDots = document.querySelectorAll('#commercialDots .slider-dot');
+    
+    if (heroSlides.length === 0) return;
+    
+    heroSlides[currentHeroSlide].classList.remove('active');
+    heroDots[currentHeroSlide].classList.remove('active');
+    
+    currentHeroSlide = index;
+    
+    heroSlides[currentHeroSlide].classList.add('active');
+    heroDots[currentHeroSlide].classList.add('active');
+}
+
+function startCommercialSlider() {
+    const heroSlides = document.querySelectorAll('.portfolio-hero-slide');
+    if (heroSlides.length <= 1) return;
+    
+    // 清除之前的interval
+    if (heroSliderInterval) clearInterval(heroSliderInterval);
+    
+    heroSliderInterval = setInterval(() => {
+        let nextSlide = (currentHeroSlide + 1) % heroSlides.length;
+        changeHeroSlide(nextSlide);
+    }, 4000);
+}
+
+// 作品集項目輪播類別
+class PortfolioSlider {
+    constructor(sliderElement) {
+        this.slider = sliderElement;
+        this.slides = sliderElement.querySelectorAll('.portfolio-slide');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        
+        if (this.totalSlides > 1) {
+            this.init();
+        }
+    }
+    
+    init() {
+        setInterval(() => {
+            this.nextSlide();
+        }, 3000);
+    }
+    
+    nextSlide() {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.slides[this.currentSlide].classList.add('active');
+    }
+}
+
+// 關於我們輪播功能
+class AboutSlider {
+    constructor() {
+        this.slides = document.querySelectorAll('.about-slide');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        
+        if (this.totalSlides > 1) {
+            this.init();
+        }
+    }
+    
+    init() {
+        setInterval(() => {
+            this.nextSlide();
+        }, 4000);
+    }
+    
+    nextSlide() {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+        this.slides[this.currentSlide].classList.add('active');
+    }
+}
+
+// 媒體切換功能
+function toggleMedia(type) {
+    const video = document.getElementById('heroVideo');
+    const slideshow = document.getElementById('heroSlideshow');
+    const buttons = document.querySelectorAll('.media-toggle button');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if (type === 'video') {
+        slideshow.style.display = 'none';
+        video.style.display = 'block';
+        buttons[1].classList.add('active');
+    } else {
+        video.style.display = 'none';
+        slideshow.style.display = 'block';
+        buttons[0].classList.add('active');
+    }
+}
+
+// QA切換功能
+function toggleQA(element) {
+    const answer = element.nextElementSibling;
+    const toggle = element.querySelector('.qa-toggle');
+    
+    if (answer.classList.contains('active')) {
+        answer.classList.remove('active');
+        toggle.classList.remove('active');
+    } else {
+        // 關閉其他打開的QA
+        document.querySelectorAll('.qa-answer.active').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelectorAll('.qa-toggle.active').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        answer.classList.add('active');
+        toggle.classList.add('active');
+    }
+}
+
+// 表單提交
+function submitForm(event) {
+    event.preventDefault();
+    
+    const formData = {
+        service: event.target.querySelector('select').value,
+        name: event.target.querySelector('input[type="text"]').value,
+        phone: event.target.querySelector('input[type="tel"]').value,
+        details: event.target.querySelector('textarea').value,
+        timestamp: new Date().toISOString()
+    };
+    
+    console.log('預約資料:', formData);
+    alert('感謝您的預約諮詢！我們將在24小時內聯絡您確認。');
+    event.target.reset();
+}
+
+// 平滑滾動
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+    </script>
+</body>
+</html>

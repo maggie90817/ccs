@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHENG CHEN STUDIO - 後台管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #222;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #d4a574;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background: #333;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #d4a574;
+        }
+        
+        .section h2 {
+            color: #d4a574;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: #d4a574;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background: #b8935f;
+        }
+        
+        .status {
+            background: #444;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .upload-area {
+            border: 2px dashed #666;
+            padding: 30px;
+            text-align: center;
+            margin: 15px 0;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        
+        .upload-area:hover {
+            border-color: #d4a574;
+            background: #333;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .image-item {
+            background: #444;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 120px;
+            background: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            background: #555;
+            border: 1px solid #666;
+            color: white;
+            padding: 5px;
+            margin: 2px 0;
+            border-radius: 3px;
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 12px;
+            margin: 2px;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .service-uploader {
+            margin: 20px 0;
+            padding: 15px;
+            background: #2a2a2a;
+            border-radius: 6px;
+        }
+        
+        .service-uploader h3 {
+            color: #d4a574;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHENG CHEN STUDIO 後台管理</h1>
+        
+        <!-- 控制面板 -->
+        <div class="section">
+            <h2>系統控制</h2>
+            <button onclick="testSystem()">測試系統</button>
+            <button onclick="clearAll()">清空所有資料</button>
+            <button onclick="openFrontend()">開啟前台</button>
+            <button onclick="exportData()">匯出資料</button>
+            <div class="status" id="systemStatus">系統準備中...</div>
+        </div>
+        
+        <!-- 主視覺圖片 -->
+        <div class="section">
+            <h2>主視覺圖片 (首頁輪播)</h2>
+            <div class="upload-area" onclick="document.getElementById('heroInput').click()">
+                點擊上傳主視覺圖片
+            </div>
+            <input type="file" id="heroInput" accept="image/*" style="display:none;" onchange="uploadImage('hero', this)">
+            <div class="image-grid" id="heroGrid"></div>
+        </div>
+        
+        <!-- 作品集分類 -->
+        <div class="section">
+            <h2>作品集 - 商業攝影</h2>
+            <div class="upload-area" onclick="document.getElementById('commercialInput').click()">
+                點擊上傳商業攝影作品 (企業形象、產品攝影、廣告拍攝)
+            </div>
+            <input type="file" id="commercialInput" accept="image/*" style="display:none;" onchange="uploadImage('commercial', this)">
+            <div class="image-grid" id="commercialGrid"></div>
+        </div>
+        
+        <div class="section">
+            <h2>作品集 - 個人寫真</h2>
+            <div class="upload-area" onclick="document.getElementById('portraitInput').click()">
+                點擊上傳人像攝影作品 (個人寫真、形象照)
+            </div>
+            <input type="file" id="portraitInput" accept="image/*" style="display:none;" onchange="uploadImage('portrait', this)">
+            <div class="image-grid" id="portraitGrid"></div>
+        </div>
+        
+        <div class="section">
+            <h2>作品集 - 婚紗攝影</h2>
+            <div class="upload-area" onclick="document.getElementById('weddingInput').click()">
+                點擊上傳婚紗攝影作品 (婚紗照、求婚攝影、婚禮紀錄)
+            </div>
+            <input type="file" id="weddingInput" accept="image/*" style="display:none;" onchange="uploadImage('wedding', this)">
+            <div class="image-grid" id="weddingGrid"></div>
+        </div>
+
+        <div class="section">
+            <h2>作品集 - 家庭親子</h2>
+            <div class="upload-area" onclick="document.getElementById('familyInput').click()">
+                點擊上傳家庭親子攝影作品 (全家福、親子互動)
+            </div>
+            <input type="file" id="familyInput" accept="image/*" style="display:none;" onchange="uploadImage('family', this)">
+            <div class="image-grid" id="familyGrid"></div>
+        </div>
+         <input type="file" id="newbornInput" accept="image/*" style="display:none;" onchange="uploadImage('newborn', this)">
+            <div class="image-grid" id="newbornGrid"></div>
+        </div>
+        
+        <div class="section">
+    <h2>作品集 - 藝術創作</h2>
+    <div class="upload-area" onclick="document.getElementById('artisticInput').click()">
+        點擊上傳藝術創作作品 
+    </div>
+    <input type="file" id="artisticInput" accept="image/*" style="display:none;" onchange="uploadImage('artistic', this)">
+    <div class="image-grid" id="artisticGrid"></div>
+</div>
+
+        <div class="section">
+            <h2>作品集 - 活動攝影</h2>
+            <div class="upload-area" onclick="document.getElementById('eventInput').click()">
+                點擊上傳活動攝影作品 (企業活動、派對、聚會紀錄)
+            </div>
+            <input type="file" id="eventInput" accept="image/*" style="display:none;" onchange="uploadImage('event', this)">
+            <div class="image-grid" id="eventGrid"></div>
+        </div>
+                               
+        <!-- 服務項目圖片 -->
+        <div class="section">
+            <h2>服務項目圖片</h2>
+            <p>請為每個服務項目上傳圖片，建議上傳一張即可。</p>
+            
+            <div class="service-uploader">
+                <h3>服務01 - 商業攝影</h3>
+                <input type="file" id="service1Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service1', this)">
+                <div class="upload-area" onclick="document.getElementById('service1Input').click()">
+                    點擊上傳服務01圖片
+                </div>
+                <div class="image-grid" id="service1Grid"></div>
+            </div>
+            
+            <div class="service-uploader">
+                <h3>服務02 - 攝影棚租借</h3>
+                <input type="file" id="service2Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service2', this)">
+                <div class="upload-area" onclick="document.getElementById('service2Input').click()">
+                    點擊上傳服務02圖片
+                </div>
+                <div class="image-grid" id="service2Grid"></div>
+            </div>
+            
+            <div class="service-uploader">
+                <h3>服務03 - 個人寫真</h3>
+                <input type="file" id="service3Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service3', this)">
+                <div class="upload-area" onclick="document.getElementById('service3Input').click()">
+                    點擊上傳服務03圖片
+                </div>
+                <div class="image-grid" id="service3Grid"></div>
+            </div>
+            
+            <div class="service-uploader">
+                <h3>服務04 - 婚紗攝影</h3>
+                <input type="file" id="service4Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service4', this)">
+                <div class="upload-area" onclick="document.getElementById('service4Input').click()">
+                    點擊上傳服務04圖片
+                </div>
+                <div class="image-grid" id="service4Grid"></div>
+            </div>
+            
+            <div class="service-uploader">
+                <h3>服務05 - 家庭親子</h3>
+                <input type="file" id="service5Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service5', this)">
+                <div class="upload-area" onclick="document.getElementById('service5Input').click()">
+                    點擊上傳服務05圖片
+                </div>
+                <div class="image-grid" id="service5Grid"></div>
+            </div>
+            
+            <div class="service-uploader">
+                <h3>服務06 - 藝術創作</h3>
+                <input type="file" id="service6Input" accept="image/*" style="display:none;" onchange="uploadServiceImage('service6', this)">
+                <div class="upload-area" onclick="document.getElementById('service6Input').click()">
+                    點擊上傳服務06圖片
+                </div>
+                <div class="image-grid" id="service6Grid"></div>
+            </div>
+        </div>
+        
+        <!-- 關於我們圖片 -->
+        <div class="section">
+            <h2>關於我們圖片</h2>
+            <div class="upload-area" onclick="document.getElementById('aboutInput').click()">
+                點擊上傳關於我們圖片
+            </div>
+            <input type="file" id="aboutInput" accept="image/*" style="display:none;" onchange="uploadImage('about', this)">
+            <div class="image-grid" id="aboutGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // 詳細的資料結構 - 作品集分類
+        let websiteData = {
+            hero: [],                    // 主視覺輪播
+            // 作品集細分類
+            commercial: [],              // 商業攝影
+            portrait: [],                // 人像攝影 
+            wedding: [],                 // 婚紗攝影
+            family: [],                  // 家庭親子
+            event: [],                   // 活動攝影
+            artistic: [],                // 藝術創作
+            // 服務項目圖片 - 個別儲存
+            service1: [],                // 服務01
+            service2: [],                // 服務02
+            service3: [],                // 服務03
+            service4: [],                // 服務04
+            service5: [],                // 服務05
+            service6: [],                // 服務06
+            // 其他分類
+            about: []                    // 關於我們
+        };
+        
+        // 分類中文名稱對應
+        const categoryNames = {
+            hero: '主視覺輪播',
+            commercial: '商業攝影',
+            portrait: '人像攝影',
+            wedding: '婚紗攝影', 
+            family: '家庭親子',
+            maternity: '孕婦寫真',
+            newborn: '新生兒攝影',
+            event: '活動攝影',
+            artistic: '藝術創作',
+            service1: '服務01',
+            service2: '服務02',
+            service3: '服務03',
+            service4: '服務04',
+            service5: '服務05',
+            service6: '服務06',
+            about: '關於我們'
+        };
+        
+        // 更新狀態顯示
+        function updateStatus(message) {
+            document.getElementById('systemStatus').textContent = 
+                new Date().toLocaleTimeString() + ': ' + message;
+            console.log('Status:', message);
+        }
+        
+        // 測試系統功能
+        function testSystem() {
+            updateStatus('開始系統測試...');
+            
+            // 測試 localStorage
+            try {
+                const testData = {test: 'data', time: Date.now()};
+                localStorage.setItem('test_key', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('test_key'));
+                localStorage.removeItem('test_key');
+                
+                if (retrieved.test === 'data') {
+                    updateStatus('localStorage 測試通過');
+                    
+                    // 測試資料保存
+                    saveToLocalStorage();
+                    updateStatus('系統測試完成 - 一切正常');
+                } else {
+                    updateStatus('localStorage 測試失敗');
+                }
+            } catch (error) {
+                updateStatus('系統測試失敗: ' + error.message);
+            }
+        }
+        
+        // 上傳圖片 - 一般分類
+        function uploadImage(category, input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            updateStatus('正在上傳圖片到 ' + categoryNames[category] + '...');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = {
+                    id: Date.now(),
+                    url: e.target.result,
+                    title: file.name.split('.')[0],
+                    description: categoryNames[category] + ' 圖片',
+                    alt: file.name.split('.')[0]
+                };
+                
+                websiteData[category].push(imageData);
+                renderCategory(category);
+                saveToLocalStorage();
+                
+                updateStatus('成功上傳圖片到 ' + categoryNames[category]);
+            };
+            
+            reader.onerror = function() {
+                updateStatus('圖片上傳失敗');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // 上傳服務圖片 - 專用函數
+        function uploadServiceImage(serviceId, input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            updateStatus('正在上傳圖片到 ' + categoryNames[serviceId] + '...');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = {
+                    id: Date.now(),
+                    url: e.target.result,
+                    title: file.name.split('.')[0],
+                    description: categoryNames[serviceId] + ' 圖片',
+                    alt: file.name.split('.')[0]
+                };
+                
+                // 清空該服務的現有圖片（只保留一張）
+                websiteData[serviceId] = [imageData];
+                renderCategory(serviceId);
+                saveToLocalStorage();
+                
+                updateStatus('成功上傳圖片到 ' + categoryNames[serviceId]);
+            };
+            
+            reader.onerror = function() {
+                updateStatus('服務圖片上傳失敗');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        // 渲染分類
+        function renderCategory(category) {
+            const grid = document.getElementById(category + 'Grid');
+            if (!grid) {
+                console.warn('找不到網格元素:', category + 'Grid');
+                return;
+            }
+            
+            grid.innerHTML = '';
+            
+            if (!websiteData[category]) {
+                console.warn('找不到分類資料:', category);
+                return;
+            }
+            
+            websiteData[category].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'image-item';
+                div.innerHTML = `
+                    <div class="image-preview">
+                        <img src="${item.url}" alt="${item.alt}">
+                    </div>
+                    <input type="text" value="${item.title}" onchange="updateItem(${item.id}, '${category}', 'title', this.value)" placeholder="標題">
+                    <textarea onchange="updateItem(${item.id}, '${category}', 'description', this.value)" placeholder="描述" rows="2">${item.description}</textarea>
+                    <button class="btn-small btn-danger" onclick="deleteItem(${item.id}, '${category}')">刪除</button>
+                `;
+                grid.appendChild(div);
+            });
+        }
+        
+        // 更新項目
+        function updateItem(id, category, field, value) {
+            const item = websiteData[category].find(i => i.id === id);
+            if (item) {
+                item[field] = value;
+                saveToLocalStorage();
+                updateStatus('已更新 ' + field);
+            }
+        }
+        
+        // 刪除項目
+        function deleteItem(id, category) {
+            if (confirm('確定要刪除這個項目嗎？')) {
+                websiteData[category] = websiteData[category].filter(i => i.id !== id);
+                renderCategory(category);
+                saveToLocalStorage();
+                updateStatus('已刪除項目');
+            }
+        }
+        
+        // 保存到 localStorage
+        function saveToLocalStorage() {
+            try {
+                const dataToSave = JSON.stringify(websiteData);
+                localStorage.setItem('chengchen_images', dataToSave);
+                localStorage.setItem('chengchen_last_update', Date.now().toString());
+                
+                console.log('資料已保存:', websiteData);
+                
+                // 觸發 storage 事件通知前台
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'chengchen_images',
+                    newValue: dataToSave
+                }));
+                
+                return true;
+            } catch (error) {
+                updateStatus('保存失敗: ' + error.message);
+                return false;
+            }
+        }
+        
+        // 從 localStorage 載入
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('chengchen_images');
+                if (saved) {
+                    const loaded = JSON.parse(saved);
+                    
+                    // 確保所有分類都存在
+                    Object.keys(websiteData).forEach(category => {
+                        if (loaded[category] && Array.isArray(loaded[category])) {
+                            websiteData[category] = loaded[category];
+                        }
+                    });
+                    
+                    // 渲染所有分類
+                    Object.keys(websiteData).forEach(category => {
+                        renderCategory(category);
+                    });
+                    
+                    const lastUpdate = localStorage.getItem('chengchen_last_update');
+                    if (lastUpdate) {
+                        const updateTime = new Date(parseInt(lastUpdate)).toLocaleString();
+                        updateStatus('資料載入完成，最後更新: ' + updateTime);
+                    } else {
+                        updateStatus('資料載入完成');
+                    }
+                    
+                    return true;
+                }
+            } catch (error) {
+                updateStatus('載入失敗: ' + error.message);
+            }
+            return false;
+        }
+        
+        // 清空所有資料 - 更新版
+        function clearAll() {
+            if (confirm('確定要清空所有資料嗎？此操作無法復原。')) {
+                localStorage.removeItem('chengchen_images');
+                localStorage.removeItem('chengchen_last_update');
+                
+                // 重置所有分類
+                Object.keys(websiteData).forEach(key => {
+                    websiteData[key] = [];
+                });
+                
+                // 清空所有顯示
+                Object.keys(websiteData).forEach(category => {
+                    renderCategory(category);
+                });
+                
+                updateStatus('所有資料已清空');
+            }
+        }
+        
+        // 開啟前台
+        function openFrontend() {
+            saveToLocalStorage();
+            updateStatus('正在開啟前台網站...');
+            
+            const frontendWindow = window.open('index.html', '_blank');
+            if (frontendWindow) {
+                updateStatus('前台網站已開啟');
+            } else {
+                alert('無法開啟前台網站，請手動開啟 index.html 檔案');
+                updateStatus('請手動開啟 index.html');
+            }
+        }
+        
+        // 匯出資料
+        function exportData() {
+            try {
+                const exportObj = {
+                    version: '1.0',
+                    exported: new Date().toISOString(),
+                    data: websiteData
+                };
+                
+                const dataStr = JSON.stringify(exportObj, null, 2);
+                const blob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `chengchen-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                
+                URL.revokeObjectURL(url);
+                updateStatus('資料匯出完成');
+            } catch (error) {
+                updateStatus('匯出失敗: ' + error.message);
+            }
+        }
+        
+        // 頁面載入時執行
+        window.addEventListener('load', function() {
+            updateStatus('系統啟動中...');
+            
+            // 載入已保存的資料
+            if (loadFromLocalStorage()) {
+                updateStatus('系統啟動完成 - 資料已載入');
+            } else {
+                updateStatus('系統啟動完成 - 請開始上傳圖片');
+            }
+            
+            console.log('CHENG CHEN STUDIO 後台管理系統已啟動');
+            console.log('當前資料:', websiteData);
+        });
+        
+        // 定期保存資料
+        setInterval(function() {
+            if (Object.values(websiteData).some(category => category.length > 0)) {
+                saveToLocalStorage();
+            }
+        }, 30000);
+        
+        // 頁面關閉時保存
+        window.addEventListener('beforeunload', function() {
+            saveToLocalStorage();
+        });
+        
+        // 全域錯誤處理
+        window.addEventListener('error', function(event) {
+            updateStatus('錯誤: ' + event.message);
+            console.error('錯誤詳情:', event);
+        });
+    </script>
+</body>
+</html>

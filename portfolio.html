@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集 | CHENG CHEN STUDIO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* 導航欄 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 100%);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 25px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #d4a574;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border: 1px solid rgba(212,165,116,0.3);
+            border-radius: 25px;
+        }
+
+        .back-btn:hover {
+            color: #d4a574;
+            border-color: #d4a574;
+        }
+
+        /* 頁面標題 */
+        .page-header {
+            padding: 150px 0 80px;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(212,165,116,0.03) 0%, #000 70%);
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 200;
+            letter-spacing: 3px;
+            color: #fff;
+        }
+
+        .page-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            font-weight: 200;
+            letter-spacing: 1px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 作品集區 */
+        .portfolio-section {
+            padding: 80px 0;
+            background: #050505;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .category-section {
+            margin-bottom: 100px;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: #d4a574;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(212,165,116,0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212,165,116,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* 輪播功能 */
+        .portfolio-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .portfolio-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 3rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .portfolio-slide.active {
+            opacity: 1;
+        }
+
+        .portfolio-slide span {
+            font-size: 0.75rem;
+            color: rgba(212,165,116,0.6);
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 200;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 15px;
+            border-radius: 15px;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 30px;
+            transform: translateY(100%);
+            transition: transform 0.5s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-title {
+            color: #d4a574;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .portfolio-subtitle {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 載入狀態 */
+        .loading-section {
+            text-align: center;
+            padding: 60px 0;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #d4a574;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(212,165,116,0.3);
+            border-top: 3px solid #d4a574;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 空狀態 */
+        .empty-category {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255,255,255,0.4);
+            border: 1px dashed rgba(212,165,116,0.2);
+            border-radius: 8px;
+        }
+
+        .empty-category h3 {
+            font-size: 1.2rem;
+            color: rgba(212,165,116,0.6);
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">CHENG CHEN STUDIO</a>
+            <a href="index.html" class="back-btn">返回首頁</a>
+        </div>
+    </nav>
+
+    <!-- 頁面標題 -->
+    <section class="page-header">
+        <h1 class="page-title">作品集</h1>
+        <p class="page-description">每張照片都承載著獨特的故事，每個瞬間都值得被永恆珍藏</p>
+    </section>
+
+    <!-- 作品集內容 -->
+    <section class="portfolio-section">
+        <div class="container" id="portfolioContainer">
+            <!-- 載入狀態 -->
+            <div class="loading-section" id="loadingSection">
+                <div class="loading-text">正在載入作品集...</div>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 作品集分類配置
+        const portfolioCategories = {
+            'commercial': {
+                title: '商業攝影',
+                subtitle: 'Commercial Photography',
+                description: '企業形象 · 產品攝影 · 品牌故事'
+            },
+            'wedding': {
+                title: '婚紗攝影',
+                subtitle: 'Wedding Photography', 
+                description: '浪漫時刻 · 永恆承諾 · 愛的見證'
+            },
+            'portrait': {
+                title: '個人寫真',
+                subtitle: 'Portrait Photography',
+                description: '專業形象 · 個性表現 · 時尚風格'
+            },
+            'family': {
+                title: '家庭親子',
+                subtitle: 'Family Photography',
+                description: '溫馨全家福 · 親子互動 · 愛的記錄'
+            },
+            'artistic': {
+                title: '藝術創作',
+                subtitle: 'Artistic Photography',
+                description: '概念攝影 · 創意實驗 · 藝術表達'
+            },
+            'event': {
+                title: '活動紀錄',
+                subtitle: 'Event Photography',
+                description: '企業活動 · 文藝表演 · 慶典紀錄'
+            }
+        };
+
+        // 從 localStorage 載入資料
+        function loadPortfolioData() {
+            try {
+                const saved = localStorage.getItem('chengchen_images');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+            } catch (error) {
+                console.error("載入資料失敗:", error);
+            }
+            return null;
+        }
+
+        // 創建作品項目
+        function createPortfolioItem(images, categoryInfo, categoryKey) {
+            if (!images || images.length === 0) return null;
+
+            const item = document.createElement('div');
+            item.className = 'portfolio-item';
+            
+            // 創建輪播容器
+            const slider = document.createElement('div');
+            slider.className = 'portfolio-slider';
+            
+            // 為每張圖片創建 slide
+            images.forEach((image, index) => {
+                const slide = document.createElement('div');
+                slide.className = `portfolio-slide ${index === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `url(${image.url})`;
+                                
+                slider.appendChild(slide);
+            });
+
+            // 創建覆蓋層
+            const overlay = document.createElement('div');
+            overlay.className = 'portfolio-overlay';
+            overlay.innerHTML = `
+                <div class="portfolio-title">${categoryInfo.title}</div>
+                <div class="portfolio-subtitle">${categoryInfo.subtitle}</div>
+            `;
+
+            item.appendChild(slider);
+            item.appendChild(overlay);
+
+            return item;
+        }
+
+        // 創建空分類顯示
+        function createEmptyCategory(categoryInfo) {
+            return `
+                <div class="empty-category">
+                    <h3>${categoryInfo.title}</h3>
+                    <p>暫無作品，敬請期待...</p>
+                </div>
+            `;
+        }
+
+        // 渲染作品集
+        function renderPortfolio(data) {
+            const container = document.getElementById('portfolioContainer');
+            const loadingSection = document.getElementById('loadingSection');
+            
+            // 隱藏載入狀態
+            if (loadingSection) {
+                loadingSection.style.display = 'none';
+            }
+
+            // 清空容器
+            container.innerHTML = '';
+
+            // 為每個分類創建區塊
+            Object.entries(portfolioCategories).forEach(([categoryKey, categoryInfo]) => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'category-section';
+
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'category-title';
+                categoryTitle.textContent = categoryInfo.title;
+                categorySection.appendChild(categoryTitle);
+
+                const portfolioGrid = document.createElement('div');
+                portfolioGrid.className = 'portfolio-grid';
+
+                // 獲取該分類的圖片資料
+                const categoryImages = data && data[categoryKey] ? data[categoryKey] : [];
+
+                if (categoryImages.length > 0) {
+                    // 如果有圖片，創建多個作品項目（每3張圖片一組）
+                    for (let i = 0; i < categoryImages.length; i += 3) {
+                        const imageGroup = categoryImages.slice(i, i + 3);
+                        const portfolioItem = createPortfolioItem(imageGroup, categoryInfo, categoryKey);
+                        if (portfolioItem) {
+                            portfolioGrid.appendChild(portfolioItem);
+                        }
+                    }
+                } else {
+                    // 如果沒有圖片，顯示空狀態
+                    portfolioGrid.innerHTML = createEmptyCategory(categoryInfo);
+                }
+
+                categorySection.appendChild(portfolioGrid);
+                container.appendChild(categorySection);
+            });
+
+            // 初始化輪播功能
+            initializeSliders();
+        }
+
+        // 輪播功能類
+        class PortfolioSlider {
+            constructor(sliderElement, delay = 0) {
+                this.slider = sliderElement;
+                this.slides = sliderElement.querySelectorAll('.portfolio-slide');
+                this.currentSlide = 0;
+                this.totalSlides = this.slides.length;
+                
+                if (this.totalSlides > 1) {
+                    this.init(delay);
+                }
+            }
+            
+            init(delay) {
+                setTimeout(() => {
+                    this.intervalId = setInterval(() => {
+                        this.nextSlide();
+                    }, 3000);
+                }, delay);
+            }
+            
+            nextSlide() {
+                if (this.totalSlides > 1) {
+                    this.slides[this.currentSlide].classList.remove('active');
+                    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+                    this.slides[this.currentSlide].classList.add('active');
+                }
+            }
+
+            destroy() {
+                if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                }
+            }
+        }
+
+        // 初始化所有輪播
+        let sliderInstances = [];
+        function initializeSliders() {
+            // 清除舊的輪播實例
+            sliderInstances.forEach(slider => slider.destroy());
+            sliderInstances = [];
+
+            // 創建新的輪播實例
+            document.querySelectorAll('.portfolio-slider').forEach((slider, index) => {
+                const sliderInstance = new PortfolioSlider(slider, index * 200);
+                sliderInstances.push(sliderInstance);
+            });
+        }
+
+        // 監聽資料更新
+        function handleDataUpdate() {
+            const data = loadPortfolioData();
+            renderPortfolio(data);
+        }
+
+        // 頁面載入時執行
+        document.addEventListener('DOMContentLoaded', () => {
+            // 載入初始資料
+            handleDataUpdate();
+            
+            // 監聽 storage 事件以即時更新
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'chengchen_images') {
+                    console.log("偵測到資料更新，重新渲染作品集");
+                    handleDataUpdate();
+                }
+            });
+        });
+
+        // 每30秒檢查一次資料更新（備用機制）
+        setInterval(() => {
+            const lastUpdate = localStorage.getItem('chengchen_last_update');
+            if (lastUpdate && window.lastKnownUpdate !== lastUpdate) {
+                window.lastKnownUpdate = lastUpdate;
+                handleDataUpdate();
+            }
+        }, 30000);
+
+        console.log('Portfolio 頁面已載入，準備顯示作品集');
+    </script>
+</body>
+</html>
